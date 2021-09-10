@@ -3,8 +3,8 @@ import express from 'express'
 import multer from 'multer'
 const router = express.Router()
 
+// initialize multer
 const storage = multer.diskStorage({
-  // to initialize multer
   destination(req, file, cb) {
     cb(null, 'uploads/')
   },

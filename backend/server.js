@@ -33,8 +33,8 @@ app.get('/api/config/paypal', (req, res) =>
 
 //make uploads folder static so we can access it
 
-const _dirname = path.resolve() //to mimic _dirname in js.
-app.use('/uploads', express.static(path.join(_dirname))) // pathjoin - to join different segments of files . dirname can only be used in common express, not available in es module so we need to mimic it by creating a variable name _dirname and use path resolve.
+const __dirname = path.resolve() //to mimic _dirname in js.
+app.use('/uploads', express.static(path.join(__dirname, '/uploads'))) // pathjoin - to join different segments of files . dirname can only be used in common express, not available in es module so we need to mimic it by creating a variable name _dirname and use path resolve.
 // it takes us to the uploads folder and making it static
 app.use(notFound)
 
