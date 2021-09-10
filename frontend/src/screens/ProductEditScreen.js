@@ -69,7 +69,7 @@ const ProductEditScreen = ({ match, history }) => {
           'Content-Type': 'multipart/form-data',
         },
       }
-      const { data } = await axios.post('api/upload', formData, config) //this is where we make the request to upload
+      const { data } = await axios.post('/api/upload', formData, config) //this is where we make the request to upload
 
       setImage(data) // path
       setUploading(false) // to stop the loader

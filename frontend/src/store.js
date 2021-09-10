@@ -23,6 +23,7 @@ import {
   orderDetailsReducer,
   orderPayReducer,
   orderListMyReducer,
+  orderListReducer,
 } from './reducers/orderReducers'
 
 const reducer = combineReducers({
@@ -43,6 +44,7 @@ const reducer = combineReducers({
   orderDetails: orderDetailsReducer,
   orderPay: orderPayReducer,
   orderListMy: orderListMyReducer,
+  orderList: orderListReducer,
 })
 
 const cartItemsFromStorage = localStorage.getItem('cartItems')
@@ -76,6 +78,6 @@ const store = createStore(
 export default store
 
 // we need a provider to implement the store to our application that comes from react-redux
-//So we need to import it in our index.js which is our entry point
+// So we need to import it in our index.js which is our entry point
 
 // when our store initializes if there is something in the localStorage for the shipping address we want to add that to the state
