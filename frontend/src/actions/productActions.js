@@ -23,12 +23,14 @@ import {
 // pass in keyword and set it to an empty string as a default.
 //action creators. reducers are functions. these are the actual actions.
 export const listProducts =
-  (keyword = '') =>
+  (keyword = '', pageNumber = '') =>
   async (dispatch) => {
     try {
       dispatch({ type: PRODUCT_LIST_REQUEST })
 
-      const { data } = await axios.get(`/api/products?keyword=${keyword}`)
+      const { data } = await axios.get(
+        `/api/products?keyword=${keyword}&pageNumber=${pageNumber}`
+      )
       // we change the route to include the keyword query.
       dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data })
     } catch (error) {

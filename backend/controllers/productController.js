@@ -6,6 +6,10 @@ import Product from '../models/productModel.js'
 // @access Public
 
 const getProducts = asyncHandler(async (req, res) => {
+  const pageSize = 2
+
+  const page = Number(req.query.pageNumber) || 1 // ?pageNumber=1
+
   const keyword = req.query.keyword
     ? {
         name: {
@@ -14,10 +18,14 @@ const getProducts = asyncHandler(async (req, res) => {
         },
       }
     : {}
+
+  const count = await Product.countDocuments({ ...keyword }) // before we load the products, we need to get the total count of products.
   // we cannot just place name= req.query.keyword. We use regex so we dont have to type the exact name of the item to search.
   const products = await Product.find({ ...keyword })
+    .limit(pageSize)
+    .skip(pageSize * (page - 1))
 
-  res.json(products)
+  res.json({ products, page, pages: Math.ceil(count / pageSize) })
 })
 
 // @desc Fetch single product
