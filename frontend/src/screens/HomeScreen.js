@@ -6,14 +6,16 @@ import Loader from '../components/Loader'
 import Message from '../components/Message'
 import { listProducts } from '../actions/productActions'
 
-const HomeScreen = () => {
+const HomeScreen = ({ match }) => {
+  const keyword = match.params.keyword // we set this route in app.js. instead of id, we are getting keyword
+
   const dispatch = useDispatch()
 
   const productList = useSelector((state) => state.productList)
   const { loading, error, products } = productList
   useEffect(() => {
-    dispatch(listProducts()) // whatever you put here will run as soon as the component loads.
-  }, [dispatch])
+    dispatch(listProducts(keyword)) // whatever you put here will run as soon as the component loads.
+  }, [dispatch, keyword]) // We pass the keyword in listProducts because that is the action that gets the products from the backend
 
   return (
     <>

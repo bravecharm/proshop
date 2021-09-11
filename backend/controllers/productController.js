@@ -6,7 +6,16 @@ import Product from '../models/productModel.js'
 // @access Public
 
 const getProducts = asyncHandler(async (req, res) => {
-  const products = await Product.find({})
+  const keyword = req.query.keyword
+    ? {
+        name: {
+          $regex: req.query.keyword,
+          $options: 'i',
+        },
+      }
+    : {}
+  // we cannot just place name= req.query.keyword. We use regex so we dont have to type the exact name of the item to search.
+  const products = await Product.find({ ...keyword })
 
   res.json(products)
 })
