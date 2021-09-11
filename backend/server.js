@@ -22,10 +22,6 @@ if (process.env.NODE_ENV === 'development') {
 }
 app.use(express.json()) //related to user authentication
 
-app.get('/', (req, res) => {
-  res.send('API is running...')
-})
-
 app.use('/api/products', productRoutes)
 app.use('/api/users', userRoutes)
 app.use('/api/orders', orderRoutes)
@@ -42,6 +38,19 @@ app.get('/api/config/paypal', (req, res) =>
 const __dirname = path.resolve() //to mimic _dirname in js.
 app.use('/uploads', express.static(path.join(__dirname, '/uploads'))) // pathjoin - to join different segments of files . dirname can only be used in common express, not available in es module so we need to mimic it by creating a variable name _dirname and use path resolve.
 // it takes us to the uploads folder and making it static
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '/frontend/build'))) //to make the 'build' folder in frontend as our static folder in production
+
+  app.get('*', (req, res) =>
+    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
+  ) // any route thats not any of these ('/api) is going to point to this index.html in that static 'build' folder.
+} else {
+  app.get('/', (req, res) => {
+    res.send('API is running...')
+  })
+}
+
 app.use(notFound)
 
 app.use(errorHandler)
